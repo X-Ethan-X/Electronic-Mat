@@ -1,0 +1,27 @@
+[project]
+name = "mat"
+version = "0.1.0"
+description = "Add your description here"
+authors = [{ name = "Alex You", email = "youyialex@outlook.com" }]
+dependencies = [
+    "pyside6>=6.7.1",
+    "pyqtgraph>=0.13.7",
+    "pyopengl>=3.1.7",
+    "pyserial>=3.5",
+    "numpy>=1.26.4",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+virtual = true
+managed = true
+dev-dependencies = [
+    "pyinstaller>=6.8.0",
+    "imageio",
+    "pandas>=2.2.2",
+]
