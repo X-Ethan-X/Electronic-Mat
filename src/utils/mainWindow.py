@@ -1,9 +1,11 @@
 from PySide6.QtCore import QTimer, Slot, Qt
-from PySide6.QtGui import QCloseEvent, QIcon
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QButtonGroup
+
 from .mainUI import Ui_MainWindow
 from .mat_48 import Mat
 
+import resource_rc
 import time
 import os
 from .plot import SIZE_X, SIZE_Y
@@ -18,7 +20,7 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle("Mat Data Analysis")
-        self.setWindowIcon(QIcon("src/resources/econ.ico"))
+        self.setWindowIcon(QIcon(":/src/resources/econ.ico"))
         self.plot = MatMatrixPlot()
         self.display_plot_layout.addWidget(self.plot)
         self.record = MatMatrixRecord()

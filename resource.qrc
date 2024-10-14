@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="/">
+    <file>src/resources/econ.ico</file>
+  </qresource>
+</RCC>
