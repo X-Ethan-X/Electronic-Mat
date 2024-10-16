@@ -1,4 +1,4 @@
-from PySide6.QtCore import QTimer, Slot, Qt
+from PySide6.QtCore import Slot, Qt
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QButtonGroup
 

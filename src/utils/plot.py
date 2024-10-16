@@ -2,8 +2,8 @@
 
 import os
 import time
+import resource_rc
 
-import re
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
