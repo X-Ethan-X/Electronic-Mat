@@ -13,20 +13,14 @@ from queue import Queue
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 
-SIZE_X = 25
-SIZE_Y = 34
+SIZE_X = 32
+SIZE_Y = 32
 
 
 def get_matrix(data):
-    def extract_numbers(s):
-        match = re.match(r'R(\d+)_C(\d+)', s)
-        if match:
-            return int(match.group(1)) + 1, int(match.group(2)) + 1
-        else:
-            raise ValueError("Unexpected csv file formate")
 
-    row, col = extract_numbers(data.columns[-1])
-    matrix = data.values[:, 1:].astype(float)
+    row, col = SIZE_Y, SIZE_X
+    matrix = data.values[:, -(SIZE_X * SIZE_Y):].astype(float)
     matrix.resize(matrix.shape[0], row, col)
     return matrix
 
@@ -39,7 +33,7 @@ def matrix_analysis(matrix):
     # Difference coefficient
     coe_matrix = (std_matrix / (mean_matrix + 1e-7)) * 100
     # Zeros Crossing
-    zc_matrix = np.sum(np.sign(matrix - 30), axis=0)
+    zc_matrix = np.sum(np.sign(matrix - 20), axis=0)
     return mean_matrix, std_matrix, coe_matrix, zc_matrix
 
 
@@ -49,12 +43,14 @@ def matrix2pictures(matrix, file_path):
     y = np.linspace(0, row, row)
     X, Y = np.meshgrid(x, y)
     fig, ax = plt.subplots()
+    fig.set_size_inches(14.8, 12.8)
+    ax.set_position([0.05, 0.05, 0.93, 0.93])
     # Plot grid.
     ax.grid(c='k', ls='-', alpha=0.3)
-    ax.set(xlim=(0, column), xticks=np.arange(0, column + 1, 2),
-           xticklabels=['C' + str(i) for i in range(0, column + 1, 2)],
-           ylim=(0, row), yticks=np.arange(0, row + 1, 2),
-           yticklabels=['R' + str(i) for i in range(0, row + 1, 2)])
+    ax.set(xlim=(0, column), xticks=np.arange(0, column + 1, 1),
+           xticklabels=['C' + str(i) for i in range(0, column + 1, 1)],
+           ylim=(0, row), yticks=np.arange(0, row + 1, 1),
+           yticklabels=['R' + str(i) for i in range(0, row + 1, 1)])
     cs = ax.contourf(X, Y, matrix, cmap="cool")
     fig.colorbar(cs)
     plt.savefig(file_path)
@@ -66,7 +62,7 @@ class MatMatrix(FigureCanvasQTAgg):
         self.fig = Figure(
             figsize=(2, 2), dpi=70, facecolor="#f0f0f0", edgecolor="#f0f0f0"
         )
-        self.axes = self.fig.add_subplot(111)
+        self.axes = self.fig.add_subplot(111, position=[0.05, 0.05, 0.93, 0.93])
         super().__init__(self.fig)
         self._get_animation(np.zeros((SIZE_X, SIZE_Y)))
 
@@ -79,11 +75,11 @@ class MatMatrix(FigureCanvasQTAgg):
         X, Y = np.meshgrid(x, y)
         self.axes.set(
             xlim=(0, column),
-            xticks=np.arange(0, column + 1, 2),
-            xticklabels=["C" + str(i) for i in range(0, column + 1, 2)],
+            xticks=np.arange(0, column + 1, 1),
+            xticklabels=["C" + str(i) for i in range(0, column + 1, 1)],
             ylim=(0, row),
-            yticks=np.arange(0, row + 1, 2),
-            yticklabels=["R" + str(i) for i in range(0, row + 1, 2)],
+            yticks=np.arange(0, row + 1, 1),
+            yticklabels=["R" + str(i) for i in range(0, row + 1, 1)],
         )
         self.axes.grid(True, linestyle='-.', color='k')
         cs = self.axes.contourf(X, Y, matrix, cmap="cool")
@@ -103,7 +99,7 @@ class MatMatrixPlot(MatMatrix):
     def _get_artist(self, i):
         while self.matrix_queue.empty():
             time.sleep(0.5)
-        data = self.matrix_queue.get() / 50
+        data = self.matrix_queue.get()
         return self._get_animation(data),
 
     def plot_start(self):
