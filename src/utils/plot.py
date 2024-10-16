@@ -2,7 +2,6 @@
 
 import os
 import time
-import resource_rc
 
 import numpy as np
 import pandas as pd
@@ -33,11 +32,12 @@ def matrix_analysis(matrix):
     # Difference coefficient
     coe_matrix = (std_matrix / (mean_matrix + 1e-7)) * 100
     # Zeros Crossing
-    zc_matrix = np.sum(np.sign(matrix - 20), axis=0)
+    zc_matrix = np.sum(np.sign(matrix - 25), axis=0)
     return mean_matrix, std_matrix, coe_matrix, zc_matrix
 
 
 def matrix2pictures(matrix, file_path):
+    matrix = matrix.T
     row, column = matrix.shape
     x = np.linspace(0, column, column)
     y = np.linspace(0, row, row)

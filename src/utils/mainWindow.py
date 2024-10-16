@@ -31,6 +31,7 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         self.buttonGroup.buttonClicked.connect(self.on_button_group_clicked)
         self.replayScrollBar.setVisible(False)
         self.replayScrollBar.valueChanged.connect(self.animation_replay)
+        self.speed = 1
 
         self.show()
 
@@ -79,6 +80,12 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         if not self.replayScrollBar.isVisible():
             return
         if event.key() == Qt.Key_Left:
-            self.replayScrollBar.setValue(self.replayScrollBar.value() - 1)
+            self.replayScrollBar.setValue(self.replayScrollBar.value() - self.speed)
         elif event.key() == Qt.Key_Right:
-            self.replayScrollBar.setValue(self.replayScrollBar.value() + 1)
+            self.replayScrollBar.setValue(self.replayScrollBar.value() + self.speed)
+        self.speed = self.speed if self.speed >= 5 else self.speed + 1
+
+    def keyReleaseEvent(self, event):
+        if event.isAutoRepeat() or not self.replayScrollBar.isVisible():
+            return
+        self.speed = 1
