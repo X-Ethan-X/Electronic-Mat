@@ -9,8 +9,6 @@
 #   generate-hashes: false
 #   universal: false
 
-colorama==0.4.6
-    # via tqdm
 contourpy==1.3.0
     # via matplotlib
 cycler==0.12.1
@@ -23,6 +21,8 @@ matplotlib==3.9.2
 numpy==2.1.2
     # via contourpy
     # via matplotlib
+    # via pywavelets
+    # via scipy
 packaging==24.1
     # via matplotlib
 pillow==10.4.0
@@ -39,10 +39,11 @@ pyside6-essentials==6.8.0
     # via pyside6-addons
 python-dateutil==2.9.0.post0
     # via matplotlib
+pywavelets==1.7.0
+scipy==1.14.1
 shiboken6==6.8.0
     # via pyside6
     # via pyside6-addons
     # via pyside6-essentials
 six==1.16.0
     # via python-dateutil
-tqdm==4.66.5

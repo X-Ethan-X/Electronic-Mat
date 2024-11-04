@@ -1,6 +1,6 @@
 from PySide6.QtCore import Slot, Qt
 from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QButtonGroup
+from PySide6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QButtonGroup, QInputDialog
 
 from .mainUI import Ui_MainWindow
 
@@ -27,6 +27,7 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         self.buttonGroup = QButtonGroup(self)
         self.buttonGroup.addButton(self.button_replay)
         self.buttonGroup.addButton(self.button_matrix_analysis)
+        self.buttonGroup.addButton(self.button_low_frequency_amplitud)
         self.buttonGroup.addButton(self.button_pictures_save)
         self.buttonGroup.buttonClicked.connect(self.on_button_group_clicked)
         self.replayScrollBar.setVisible(False)
@@ -65,6 +66,16 @@ class mainWindow(QMainWindow, Ui_MainWindow):
                 self.plot.generate_analysed_pictures()
                 self.plot.generate_original_pictures()
                 self.setEnabled(True)
+            elif button == self.button_low_frequency_amplitud:
+                self.replayScrollBar.setVisible(False)
+                low, lok = QInputDialog.getDouble(self, "Low Frequency", "Input", 0.00, 0.00, 30.00, decimals=2, step=0.01)
+                if lok:
+                    high, hok = QInputDialog.getDouble(self, "High Frequency", "Input", 0.00, 0.00, 70.00, decimals=2)
+                    if hok:
+                        if low >= high:
+                            QMessageBox.warning(self, "Warning", "Low frequency can not be higher than high frequency.")
+                        else:
+                            self.plot.low_frequency_amplitude(low, high)
 
     @Slot(int)
     def animation_replay(self, value: int):

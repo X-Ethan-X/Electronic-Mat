@@ -9,6 +9,7 @@ dependencies = [
     "pyserial>=3.5",
     "numpy>=1.26.4",
     "matplotlib",
+    "scipy",
 ]
 readme = "README.md"
 requires-python = ">= 3.10"

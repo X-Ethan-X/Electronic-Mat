@@ -23,7 +23,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1096, 842)
+        MainWindow.resize(1117, 875)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout_2 = QGridLayout(self.centralwidget)
@@ -55,6 +55,12 @@ class Ui_MainWindow(object):
         self.button_matrix_analysis.setCheckable(True)
 
         self.menuLayout.addWidget(self.button_matrix_analysis)
+
+        self.button_low_frequency_amplitud = QPushButton(self.centralwidget)
+        self.button_low_frequency_amplitud.setObjectName(u"button_low_frequency_amplitud")
+        self.button_low_frequency_amplitud.setMinimumSize(QSize(0, 50))
+
+        self.menuLayout.addWidget(self.button_low_frequency_amplitud)
 
         self.button_pictures_save = QPushButton(self.centralwidget)
         self.button_pictures_save.setObjectName(u"button_pictures_save")
@@ -92,6 +98,7 @@ class Ui_MainWindow(object):
         self.button_file_path_select.setText(QCoreApplication.translate("MainWindow", u"Select File", None))
         self.button_replay.setText(QCoreApplication.translate("MainWindow", u"Replay", None))
         self.button_matrix_analysis.setText(QCoreApplication.translate("MainWindow", u"Analysis", None))
+        self.button_low_frequency_amplitud.setText(QCoreApplication.translate("MainWindow", u"LFA", None))
         self.button_pictures_save.setText(QCoreApplication.translate("MainWindow", u"Picture Save", None))
     # retranslateUi
 
